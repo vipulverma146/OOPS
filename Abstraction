@@ -1,0 +1,94 @@
+// main.java
+class Main {
+  public static void main(String[] args) {
+    Payroll payroll = new Payroll();
+
+payroll.add(new FullTimeEmployee("John", "Doe", 6000));
+payroll.add(new FullTimeEmployee("Jane", "Doe", 6500));
+payroll.add(new HourlyEmployee("Jenifer", "Smith", 200, 50));
+payroll.add(new HourlyEmployee("David", "Wilson", 150, 100));
+payroll.add(new HourlyEmployee("Kevin", "Miller", 100, 150));
+
+payroll.print();
+  }
+}
+
+// Payroll.java
+
+import java.util.List;
+import java.util.ArrayList;
+
+public class Payroll{
+  List<Employee> employees = new ArrayList<Employee>();
+
+  public void add(Employee e){
+    employees.add(e);
+  }
+
+  public void print(){
+    for(Employee e : employees){
+      System.out.println(e.fullName() +"\t Rs."+ e.getSalary());
+    }
+  }
+}
+
+
+
+//Employee.java
+
+public class Employee{
+  private String firstName;
+  private String lastName;
+
+  public Employee(String firstName, String lastName){
+    this.firstName = firstName;
+    this.lastName = lastName;
+    System.out.println("Inside Employee Constructor");
+  }
+
+  public String fullName(){
+    return this.firstName +" "+ this.lastName;
+  }
+
+  public double getSalary(){
+    return 0;
+  }
+}
+
+
+//Fulltime Employee.java
+public class FullTimeEmployee extends Employee{
+  
+  private double salary;
+  
+  public FullTimeEmployee(String firstName, String lastName, double salary){
+    super(firstName,lastName);
+    this.salary = salary;
+    System.out.println("Inside FullTimeEmployee Constructor");
+  }
+
+  @Override
+  public double getSalary(){
+    return salary;
+  }
+}
+
+// HourlyEmplyee.java
+
+public class HourlyEmployee extends Employee{
+  
+  private double workedHours;
+  private double rate;
+  
+  public HourlyEmployee(String firstName, String lastName, double workedHours, double rate){
+    super(firstName,lastName);
+    this.workedHours = workedHours;
+    this.rate = rate;
+    System.out.println("Inside HourlyEmployee Constructor");
+  }
+
+  @Override
+  public double getSalary(){
+    return rate * workedHours;
+  }
+}
